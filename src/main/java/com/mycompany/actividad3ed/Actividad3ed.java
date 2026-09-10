@@ -1,9 +1,7 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.actividad3ed;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
@@ -13,23 +11,23 @@ import java.util.Scanner;
  */
 public class Actividad3ed {
     public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int opcion = -1;
 
         while (opcion != 0) {
             mostrarMenu();
-            opcion = leerOpcion(teclado);
+            opcion = leerOpcion(scanner);
 
             switch (opcion) {
-                case 1 -> ejecutarFibonacci(teclado);
+                case 1 -> ejecutarFibonacci(scanner);
                 case 2 -> ejecutarSubsetSum();
-                case 3 -> ejecutarSudoku(teclado);
+                case 3 -> ejecutarSudoku(scanner);
                 case 0 -> System.out.println("Saliendo");
                 default -> System.out.println("Opcion invalida, intenta de nuevo.\n");
             }
         }
 
-        teclado.close();
+        scanner.close();
     }
 
     private static void mostrarMenu() {
@@ -41,9 +39,9 @@ public class Actividad3ed {
         System.out.print("Elige una opcion: ");
     }
 
-    private static int leerOpcion(Scanner teclado) {
+    private static int leerOpcion(Scanner scanner) {
         try {
-            return Integer.parseInt(teclado.nextLine().trim());
+            return Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
             return -1;
         }
@@ -51,11 +49,11 @@ public class Actividad3ed {
 
 
 
-    private static void ejecutarFibonacci(Scanner teclado) {
+    private static void ejecutarFibonacci(Scanner scanner) {
         System.out.print("Ingresa n: ");
         int n;
         try {
-            n = Integer.parseInt(teclado.nextLine().trim());
+            n = Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
             System.out.println("Valor invalido.\n");
             return;
@@ -70,27 +68,24 @@ public class Actividad3ed {
         System.out.println("Fibonacci(" + n + ") = " + Fibonacci.calculate(n) + "\n");
     }
 
-
-
     private static void ejecutarSubsetSum() {
-        int[] conjunto = {3, 34, 4, 12, 5, 2};
-        int objetivo = 9;
+       int[] conjunto = {3, 34, 4, 12, 5, 2};
+       int objetivo = 9;
 
-        SubsetSumSolver solver = new SubsetSumSolver();
-        boolean existe = solver.exists(conjunto, conjunto.length, objetivo);
+       SubsetSumSolver solver = new SubsetSumSolver();
+       StringBuilder subconjunto = new StringBuilder();
+       boolean existe = solver.existsConSubconjunto(conjunto, conjunto.length, objetivo, subconjunto);
 
-        if (existe) {
-            System.out.println("Existe un subconjunto que suma " + objetivo + "\n");
-        } else {
-            System.out.println("No existe un subconjunto que sume " + objetivo + "\n");
-        }
-    }
+       if (existe) {
+           System.out.println("Existe un subconjunto que suma " + objetivo + ": [" + subconjunto + "]\n");
+       } else {
+           System.out.println("No existe " + objetivo + "\n");
+       }
+   }
 
-
-
-    private static void ejecutarSudoku(Scanner teclado) {
+    private static void ejecutarSudoku(Scanner scanner) {
         System.out.print("Inserte sudoku: ");
-        String ruta = teclado.nextLine().trim();
+        String ruta = scanner.nextLine().trim();
 
         SudokuFileHandler fileHandler = new SudokuFileHandler();
         SudokuSolver solver = new SudokuSolver();
